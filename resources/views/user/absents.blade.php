@@ -20,8 +20,8 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-        <table id="example2" class="table table-bordered table-hover">
-            <thead>
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
                 <tr>
                     <th>No</th>
                     <th>Day</th>
@@ -29,73 +29,73 @@
                     <th class="text-center">Status</th>
                     <th>Description</th>
                 </tr>
-            </thead>
-            <tbody>
-                @if (count($absents) == 0)
-                <tr class="text-center">
-                    <td colspan="4" class="text-center">- No Data -</td>
-                </tr>
-                @endif
+                </thead>
+                <tbody>
+                    @if (count($absents) == 0)
+                    <tr class="text-center">
+                        <td colspan="4" class="text-center">- No Data -</td>
+                    </tr>
+                    @endif
 
-                @php
-                    $no=1;
-                @endphp
-                @foreach ($absents as $data)
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>
-                        @php
-                            echo date('d F Y', strtotime($data->created_at));
-                        @endphp
-                    </td>
-                    <td>
-                        @php
-                            echo date('H:i:s', strtotime($data->created_at));
-                        @endphp
-                    </td>
-                    <td class="text-center">
-                        @if ($data->type == 1)
-                        <span class="badge badge-primary">Come in</span>
-                        @else
-                        <span class="badge badge-success">Come home</span>
-                        @endif
-                    </td>
-                    <td>
-
-                        {{-- @php
-                            $waktu =
-                        @endphp --}}
-                        @if ($data->type == 1)
-                            @if (date('H:i:s', strtotime($data->created_at)) > '09:00:00')
-                                Invalid absence <i class="fas fa-times text-danger ml-2"></i>
+                    @php
+                        $no=1;
+                    @endphp
+                    @foreach ($absents as $data)
+                    <tr>
+                        <td>{{ $no++ }}</td>
+                        <td>
+                            @php
+                                echo date('d F Y', strtotime($data->created_at));
+                            @endphp
+                        </td>
+                        <td>
+                            @php
+                                echo date('H:i:s', strtotime($data->created_at));
+                            @endphp
+                        </td>
+                        <td class="text-center">
+                            @if ($data->type == 1)
+                            <span class="badge badge-primary">Come in</span>
                             @else
-                                Valid <i class="fas fa-check text-success ml-2"></i>
+                            <span class="badge badge-success">Come home</span>
                             @endif
-                        @else
-                            @if (date('H:i:s', strtotime($data->created_at)) < '17:00:00')
-                                Invalid absence <i class="fas fa-times text-danger ml-2"></i>
-                            @else
-                                Valid <i class="fas fa-check text-success ml-2"></i>
-                            @endif
-                        @endif
+                        </td>
+                        <td>
 
-                    </td>
-                </tr>
-                @endforeach
-                <tr>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>Day</th>
-                    <th>Time</th>
-                    <th class="text-center">Status</th>
-                    <th>Description</th>
-                </tr>
-            </tfoot>
-        </table>
+                            {{-- @php
+                                $waktu =
+                            @endphp --}}
+                            @if ($data->type == 1)
+                                @if (date('H:i:s', strtotime($data->created_at)) > '09:00:00')
+                                    Invalid absence <i class="fas fa-times text-danger ml-2"></i>
+                                @else
+                                    Valid <i class="fas fa-check text-success ml-2"></i>
+                                @endif
+                            @else
+                                @if (date('H:i:s', strtotime($data->created_at)) < '17:00:00')
+                                    Invalid absence <i class="fas fa-times text-danger ml-2"></i>
+                                @else
+                                    Valid <i class="fas fa-check text-success ml-2"></i>
+                                @endif
+                            @endif
+
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th class="text-center">Status</th>
+                        <th>Description</th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
+
         <!-- /.card-body -->
     </div>
 </div>

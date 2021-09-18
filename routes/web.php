@@ -4,7 +4,6 @@ use App\Http\Controllers\AbsentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\AbsentnController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -38,6 +37,8 @@ Route::middleware(['auth', 'level:1,2'])->group(function () {
 Route::middleware(['auth', 'level:3'])->group(function () {
     Route::get('/absents', [AbsentController::class, 'index'])->name('absents');
     Route::post('/absents/check/{id}', [AbsentController::class, 'check'])->name('absents.check');
-    Route::get('/permissions', [UserController::class, 'index'])->name('permissions');
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+    Route::post('/permissions/sick/{id}', [PermissionController::class, 'sick'])->name('permissions.sick');
+    Route::post('/permissions/paid-leave/{id}', [PermissionController::class, 'paidLeave'])->name('permissions.paidLeave');
 });
 require __DIR__ . '/auth.php';

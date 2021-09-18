@@ -19,8 +19,9 @@ class CreatePermissionsTable extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('type', ['1', '2'])->comment('1 = Sakit, 2 = Cuti');
             $table->date('date');
-            $table->text('description');
-            $table->text('file');
+            $table->text('description')->nullable();
+            $table->text('file')->nullable();
+            $table->enum('status', ['1', '2', '3'])->comment('1 = Acc, 2 = Request, 3 = Reject');
             $table->timestamps();
         });
     }

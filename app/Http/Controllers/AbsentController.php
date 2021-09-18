@@ -15,11 +15,6 @@ class AbsentController extends Controller
         $this->Absent = new Absent();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data = array(

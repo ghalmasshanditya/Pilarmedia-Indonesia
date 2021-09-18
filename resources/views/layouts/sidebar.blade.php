@@ -61,8 +61,15 @@
         @if (Auth::user()->level == 1)
 
         @elseif (Auth::user()->level == 2)
-
-        @elseif (Auth::user()->level == 3)
+        <li class="nav-item">
+            <a href="/absents" class="nav-link @if (request()->segment(1) == 'absents') active @endif">
+                <i class="nav-icon fas fa-clipboard-check"></i>
+            <p>
+                Absents
+            </p>
+            </a>
+        </li>
+        @elseif (Auth::user()->level == 3 && Auth::user()->address !='' && Auth::user()->phone !='' && Auth::user()->gender !='' && Auth::user()->birth !='' )
         <li class="nav-item">
             <a href="/absents" class="nav-link @if (request()->segment(1) == 'absents') active @endif">
                 <i class="nav-icon fas fa-clipboard-check"></i>
