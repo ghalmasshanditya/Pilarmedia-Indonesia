@@ -19,4 +19,21 @@ class Permission extends Model
             ->get();
         return $data;
     }
+
+    public function getRequested()
+    {
+        $data = DB::table($this->table)
+            ->select('permissions.*', 'users.name as name')
+            ->Join('users', 'users.id', '=', 'permissions.id_user')
+            ->where('status', 2)
+            ->orderByRaw('permissions.created_at ASC')
+            ->get();
+        return $data;
+    }
+
+    public function getReportOneMonth($id)
+    {
+        $data = DB::select("SELECT * FROM `permissions` WHERE MONTH(created_at) = DATE_FORMAT(now(), '%m')");
+        return $data;
+    }
 }

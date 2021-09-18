@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{asset('assets')}}/plugins/toastr/toastr.min.css"><!-- Select2 -->
     <link rel="stylesheet" href="{{asset('assets')}}/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{asset('assets')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    
+
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
@@ -52,6 +52,11 @@
                 </div>
                 </div>
             </div>
+            @if (Auth::user()->level == 3 && Auth::user()->address =='' || Auth::user()->phone =='' || Auth::user()->gender =='' || Auth::user()->birth =='')
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hello!</strong> Please complete your personal data information in your profile section.
+            </div>
+            @endif
         </div>
         <!-- /.content-header -->
 

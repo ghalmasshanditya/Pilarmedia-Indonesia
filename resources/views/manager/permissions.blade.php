@@ -3,20 +3,18 @@
 @section('page-name','Permissions')
 @section('content')
 <div class="col-12">
-    @if(session()->get('message') == 'valid')
+    @if(session()->get('message') == 'approve')
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Tahnk you!</strong> Your leave permit will be processed immediately.
+            <strong>Success!</strong> Permissions has been approved.
         </div>
-    @elseif(session()->get('message') == 'invalid')
+    @elseif(session()->get('message') == 'reject')
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Sorry!</strong> Your leave permit will is invalid
+            <strong>Success!</strong> Permissions has been rejected.
         </div>
     @endif
     <div class="card">
         <div class="card-header">
         <h3 class="card-title" style="float: left;"> Permission List  </h3><br>
-        <button type="button" class="btn btn-outline-primary btn-sm mt-2 mr-2" data-toggle="modal" data-target="#sick" ><i class="fas fa-plus"></i> Sick Permission</button>
-        <button type="button" class="btn btn-outline-success btn-sm mt-2 mr-2" data-toggle="modal" data-target="#paid" ><i class="fas fa-plus"></i> Paid Leave</button>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -29,12 +27,13 @@
                     <th>File</th>
                     <th>Description</th>
                     <th>Status</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                     @if (count($permissions) == 0)
                     <tr class="text-center">
-                        <td colspan="5" class="text-center">- No Data -</td>
+                        <td colspan="7" class="text-center">- No Data -</td>
                     </tr>
                     @endif
                 @php
@@ -55,13 +54,7 @@
                             <span class="badge badge-success">Paid Leave</span>
                         @endif
                     </td>
-                    <td>
-                        @if ($data->type == 1)
-                        <a href="../assets/file/{{ $data->file }}"><i class="fas fa-download"> </i> download</a>
-                        @else
-                        -
-                        @endif
-                    </td>
+                    <td> <a href="../assets/file/{{ $data->file }}"><i class="fas fa-download"> </i> download</a></td>
                     <td>{{ $data->description }}</td>
                     <td>
                         @if ($data->status == 1)
@@ -71,6 +64,10 @@
                         @elseif ($data->status == 3)
                             <span class="badge badge-danger">Rejected</span>
                         @endif
+                    </td>
+                    <td class="text-center">
+                        <button style="width: 100%" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#approve{{ $data->id }}" ><i class="fas fa-check"></i> Approve</button><br>
+                        <button style="width: 100%" type="button" class="btn btn-outline-danger btn-sm mt-2" data-toggle="modal" data-target="#reject{{ $data->id }}" ><i class="fas fa-times"></i> Reject</button>
                     </td>
                 </tr>
                 @endforeach
@@ -83,6 +80,7 @@
                         <th>File</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </tfoot>
             </table>
@@ -92,19 +90,24 @@
 </div>
 
 <!-- Come In -->
-<div class="modal fade" id="sick">
+@foreach ($permissions as $data)
+<div class="modal fade" id="approve{{ $data->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" method="POST" action="/permissions/sick/{{ Auth::user()->id }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" action="/permissions/approve/{{ $data->id }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Sick Permission</h4>
+                    <h4 class="modal-title">Approve Permission</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="card-body mt-0">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $data->name }}" placeholder="name" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="Type">Type</label>
                             <select class="form-control @error('type') is-invalid @enderror select2bs4" name="type" value="{{ old('type') }}" readonly>
@@ -115,24 +118,21 @@
                         </div>
                         <div class="form-group">
                             <label for="Date">Date</label>
-                            <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" placeholder="Date">
+                            <input type="text" class="form-control @error('date') is-invalid @enderror" name="date" value="@php echo date('d F Y', strtotime($data->date)); @endphp" placeholder="Date" readonly>
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" placeholder="Description">
+                            <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $data->description }}" placeholder="Description" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="File">File</label>
-                            <input type="file" class="form-control @error('file') is-invalid @enderror" name="file">
-                            <small>Acceptable file types are <strong>PDF, JPG, JPEG, AND PNG</strong>.</small>
-                            <br>
-                            <small>Max file size is <strong>5 MB</strong>.</small>
+                            <label for="File">File</label><br>
+                            <a href="../assets/file/{{ $data->file }}"><i class="fas fa-download"> </i> download</a>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Input</button>
+                    <button type="submit" class="btn btn-primary">Approve</button>
                 </div>
             </form>
         </div>
@@ -140,19 +140,26 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="paid">
+@endforeach
+
+@foreach ($permissions as $data)
+<div class="modal fade" id="reject{{ $data->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" method="POST" action="/permissions/paid-leave/{{ Auth::user()->id }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" action="/permissions/reject/{{ $data->id }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Paid Leave Permission</h4>
+                    <h4 class="modal-title">Reject Permission</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="card-body mt-0">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $data->name }}" placeholder="name" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="Type">Type</label>
                             <select class="form-control @error('type') is-invalid @enderror select2bs4" name="type" value="{{ old('type') }}" readonly>
@@ -163,17 +170,17 @@
                         </div>
                         <div class="form-group">
                             <label for="Date">Date</label>
-                            <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" placeholder="Date">
+                            <input type="text" class="form-control @error('date') is-invalid @enderror" name="date" value="@php echo date('d F Y', strtotime($data->date)); @endphp" placeholder="Date" readonly>
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" placeholder="Description">
+                            <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $data->description }}" placeholder="Description" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Input</button>
+                    <button type="submit" class="btn btn-danger">Reject</button>
                 </div>
             </form>
         </div>
@@ -181,6 +188,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
+@endforeach
 @endsection
 

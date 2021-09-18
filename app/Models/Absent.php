@@ -19,4 +19,10 @@ class Absent extends Model
             ->get();
         return $data;
     }
+
+    public function getReportOneMonth($id)
+    {
+        $data = DB::select("SELECT * FROM absents WHERE MONTH(created_at) = DATE_FORMAT(now(), '%m')");
+        return $data;
+    }
 }

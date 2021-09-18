@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Absent;
 use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,8 @@ class AbsentController extends Controller
     public function __construct()
     {
         $this->Absent = new Absent();
+        $this->Permission = new Permission();
+        $this->User = new User();
     }
 
     public function index()
@@ -22,6 +25,25 @@ class AbsentController extends Controller
         );
         // dd($data);
         return view('user.absents', $data);
+    }
+
+    public function reportAbsence($id)
+    {
+        $data = array(
+            'absents' => $this->Absent->getReportOneMonth($id),
+            'permissions' => $this->Permission->getReportOneMonth($id)
+        );
+        // dd($data);
+        return view('hrd.absents', $data);
+    }
+
+    public function listAbsence()
+    {
+        $data = array(
+            'user' => $this->User->getAllEmployee()
+        );
+        // dd($data);
+        return view('hrd.userList', $data);
     }
 
     public function check(Request $request, $id)

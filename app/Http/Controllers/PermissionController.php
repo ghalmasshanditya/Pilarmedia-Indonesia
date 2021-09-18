@@ -57,16 +57,6 @@ class PermissionController extends Controller
             $validator = 'valid';
         }
 
-
-
-
-
-
-
-
-
-
-
         return redirect('/permissions')->with('message', $validator);
     }
 
@@ -94,18 +84,26 @@ class PermissionController extends Controller
         return redirect('/permissions')->with('message', $validator);
     }
 
-    public function edit(Permission $permission)
+    public function request()
     {
-        //
+        $data = array(
+            'permissions' => $this->Permission->getRequested()
+        );
+        // dd($data);
+        return view('manager.permissions', $data);
     }
 
-    public function update(Request $request, Permission $permission)
+    public function approve($id)
     {
-        //
+        Permission::where('id', $id)
+            ->update(['status' => 1, 'updated_at' => now()]);
+        return redirect('/permissions/request')->with('message', 'approve');
     }
 
-    public function destroy(Permission $permission)
+    public function reject($id)
     {
-        //
+        Permission::where('id', $id)
+            ->update(['status' => 3, 'updated_at' => now()]);
+        return redirect('/permissions/request')->with('message', 'reject');
     }
 }

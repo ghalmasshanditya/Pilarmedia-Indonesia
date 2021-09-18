@@ -58,14 +58,31 @@
             </a>
         </li>
 
-        @if (Auth::user()->level == 1)
 
-        @elseif (Auth::user()->level == 2)
+
+        @if (Auth::user()->level == 2)
         <li class="nav-item">
-            <a href="/absents" class="nav-link @if (request()->segment(1) == 'absents') active @endif">
+            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list') active @endif">
                 <i class="nav-icon fas fa-clipboard-check"></i>
             <p>
-                Absents
+                Absence
+            </p>
+            </a>
+        </li>
+        @elseif (Auth::user()->level == 1)
+        <li class="nav-item">
+            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list' ) active @endif">
+                <i class="nav-icon fas fa-clipboard-check"></i>
+            <p>
+                Absence
+            </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/permissions/request" class="nav-link @if (request()->segment(1) == 'permissions' && request()->segment(2) == 'request') active @endif">
+                <i class="nav-icon fas fa-clock"></i>
+            <p>
+                Request Permissions
             </p>
             </a>
         </li>

@@ -29,9 +29,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'level:1'])->group(function () {
+    Route::get('/permissions/request', [PermissionController::class, 'request'])->name('permissions.request');
+    Route::post('/permissions/approve/{id}', [PermissionController::class, 'approve'])->name('permissions.approve');
+    Route::post('/permissions/reject/{id}', [PermissionController::class, 'reject'])->name('permissions.reject');
 });
 
 Route::middleware(['auth', 'level:1,2'])->group(function () {
+    Route::get('/absence-list', [AbsentController::class, 'listAbsence'])->name('absence-list');
+    Route::get('/absence-report/{id}', [AbsentController::class, 'reportAbsence'])->name('absence-report');
 });
 
 Route::middleware(['auth', 'level:3'])->group(function () {

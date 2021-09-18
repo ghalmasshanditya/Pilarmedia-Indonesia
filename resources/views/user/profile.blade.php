@@ -2,6 +2,7 @@
 @section('title','Profile')
 @section('page-name','Profile')
 @section('content')
+
 <div class="col-md-3">
 
     <!-- Profile Image -->
