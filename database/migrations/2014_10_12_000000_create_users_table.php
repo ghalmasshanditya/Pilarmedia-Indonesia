@@ -19,9 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('level', ['1', '2', '3'])->comment('1 = Manager, 2 = HRD, 3 = Karyawan');
+            $table->text('photo')->nullable();
             $table->text('phone')->nullable();
             $table->text('address')->nullable();
-            $table->text('gender')->nullable();
+            $table->enum('gender', ['Men', 'Women'])->nullable();
             $table->date('birth')->nullable();
             $table->timestamps();
         });

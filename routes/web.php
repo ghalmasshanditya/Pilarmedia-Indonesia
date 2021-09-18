@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AbsentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AbsentnController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+// Route::get('/permission', [UserController::class, 'index'])->name('permission');
+Route::get('/absents', [AbsentController::class, 'index'])->name('absents');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UserController::class, 'index'])->name('profile');
+    Route::post('/profile/update/{id}', [UserController::class, 'update'])->name('profile-update');
+    Route::post('/profile/change-profile/{id}', [UserController::class, 'updateProfile'])->name('profile-foto');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'level:1'])->group(function () {
+});
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'level:1,2'])->group(function () {
+});
+
+Route::middleware(['auth', 'level:3'])->group(function () {
+    Route::get('/absents', [AbsentController::class, 'index'])->name('absents');
+    Route::post('/absents/check/{id}', [AbsentController::class, 'check'])->name('absents.check');
+    Route::get('/permissions', [UserController::class, 'index'])->name('permissions');
+});
+require __DIR__ . '/auth.php';

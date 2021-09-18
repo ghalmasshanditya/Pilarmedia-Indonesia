@@ -1,7 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
-    <span class="brand-text font-weight-light">Pilarmedia Indonesia</span>
+    <a href="/" class="brand-link text-center">
+        <img src="{{asset('assets')}}/dist/img/favicon.png" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+        <span class="brand-text font-weight-light text-center">Pilarmedia Indonesia</span>
     </a>
 
     <!-- Sidebar -->
@@ -56,78 +57,31 @@
             </p>
             </a>
         </li>
+
+        @if (Auth::user()->level == 1)
+
+        @elseif (Auth::user()->level == 2)
+
+        @elseif (Auth::user()->level == 3)
         <li class="nav-item">
-            <a href="/education" class="nav-link @if (request()->segment(1) == 'education') active @endif">
-            <i class="nav-icon fas fa-graduation-cap"></i>
+            <a href="/absents" class="nav-link @if (request()->segment(1) == 'absents') active @endif">
+                <i class="nav-icon fas fa-clipboard-check"></i>
             <p>
-                Education
-                {{-- <span class="right badge badge-danger">New</span> --}}
+                Absents
             </p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="/experience" class="nav-link @if (request()->segment(1) == 'experience') active @endif">
+            <a href="/permissions" class="nav-link @if (request()->segment(1) == 'permissions') active @endif">
             <i class="nav-icon fas fa-briefcase"></i>
             <p>
-                Work Experience
-                {{-- <span class="right badge badge-danger">New</span> --}}
+                Permissions
             </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="/skills" class="nav-link @if (request()->segment(1) == 'skills') active @endif">
-            <i class="nav-icon fas fa-basketball-ball"></i>
-            <p>
-                Skills
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/language" class="nav-link @if (request()->segment(1) == 'language') active @endif">
-            <i class="nav-icon fab fa-font-awesome-flag"></i>
-            <p>
-                Language
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/activity" class="nav-link @if (request()->segment(1) == 'activity') active @endif">
-            <i class="nav-icon fas fa-hiking"></i>
-            <p>
-                Activities
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/trainings" class="nav-link @if (request()->segment(1) == 'trainings') active @endif">
-            <i class="nav-icon fas fa-clipboard-list"></i>
-            <p>
-                Trainings
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/resume" class="nav-link @if (request()->segment(1) == 'resume') active @endif">
-            <i class="nav-icon fas fa-print"></i>
-            <p>
-                CV / Resume
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/preview" class="nav-link bg-info @if (request()->segment(1) == 'resume') active @endif">
-            <i class="nav-icon fas fa-file-import"></i>
-            <p>
-                Preview Profile
-                {{-- <span class="right badge badge-danger">New</span> --}}
-            </p>
-            </a>
-        </li>
+        @else
+
+        @endif
 
         </ul>
     </nav>

@@ -51,6 +51,28 @@
                 </div>
             </div>
         </div>
+        <div class="input-group mb-3">
+            <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                    <input type="radio" id="radioPrimary1" name="role" value="1">
+                    <label for="radioPrimary1">
+                        Manager
+                    </label>
+                </div>
+                <div class="icheck-primary d-inline">
+                    <input type="radio" id="radioPrimary2" name="role" value="2">
+                    <label for="radioPrimary2">
+                        HRD
+                    </label>
+                </div>
+                <div class="icheck-primary d-inline">
+                    <input type="radio" id="radioPrimary3" name="role" value="3" checked>
+                    <label for="radioPrimary3">
+                        Karyawan
+                    </label>
+                </div>
+            </div>
+        </div>
         <div class="row">
 
         <!-- /.col -->
