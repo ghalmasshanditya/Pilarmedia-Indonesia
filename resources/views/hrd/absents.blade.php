@@ -5,7 +5,8 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title" style="float: left;"> Attendance List  </h3><br>
+            <h3 class="card-title" style="float: left;"> Attendance List  </h3>
+            <a href="/export/absen/{{ request()->segment('2') }}"><button type="button" style="float: right;" class="right btn btn-outline-primary btn-sm" target="_blank" ><i class="fas fa-print"></i> Print Report</button></a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -86,7 +87,8 @@
 
 <div class="card">
     <div class="card-header">
-    <h3 class="card-title" style="float: left;"> Permission List  </h3><br>
+        <h3 class="card-title" style="float: left;"> Permission List  </h3>
+        <a href="/export/izin/{{ request()->segment('2') }}"><button type="button" style="float: right;" class="right btn btn-outline-primary btn-sm" target="_blank" ><i class="fas fa-print"></i> Print Report</button></a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

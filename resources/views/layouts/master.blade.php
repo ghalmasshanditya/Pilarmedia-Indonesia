@@ -52,10 +52,13 @@
                 </div>
                 </div>
             </div>
-            @if (Auth::user()->level == 3 && Auth::user()->address =='' || Auth::user()->phone =='' || Auth::user()->gender =='' || Auth::user()->birth =='')
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Hello!</strong> Please complete your personal data information in your profile section.
-            </div>
+            @if (Auth::user()->level == 3)
+                @if (Auth::user()->address =='' || Auth::user()->phone =='' || Auth::user()->gender =='' || Auth::user()->birth =='')
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Hello!</strong> Please complete your personal data information in your profile section.
+                    </div>
+                @endif
+
             @endif
         </div>
         <!-- /.content-header -->

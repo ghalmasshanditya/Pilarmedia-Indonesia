@@ -62,7 +62,7 @@
 
         @if (Auth::user()->level == 2)
         <li class="nav-item">
-            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list') active @endif">
+            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list' || request()->segment(1) == 'absence-report') active @endif">
                 <i class="nav-icon fas fa-clipboard-check"></i>
             <p>
                 Absence
@@ -71,7 +71,7 @@
         </li>
         @elseif (Auth::user()->level == 1)
         <li class="nav-item">
-            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list' ) active @endif">
+            <a href="/absence-list" class="nav-link @if (request()->segment(1) == 'absence-list'  || request()->segment(1) == 'absence-report') active @endif">
                 <i class="nav-icon fas fa-clipboard-check"></i>
             <p>
                 Absence

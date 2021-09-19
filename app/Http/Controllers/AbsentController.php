@@ -8,6 +8,8 @@ use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserExport;
 
 class AbsentController extends Controller
 {
@@ -72,5 +74,29 @@ class AbsentController extends Controller
             }
         }
         return redirect('/absents')->with('message', $validator);
+    }
+
+    public function exportPermission($id)
+    {
+        $bulan = date('M Y');
+        return Excel::download(new UserExport('izin', $id), "Permissions-$bulan.xlsx");
+    }
+    public function exportAbsent($id)
+    {
+        $bulan = date('M Y');
+        return Excel::download(new UserExport('absen', $id), "Absent-$bulan.xlsx");
+    }
+
+    public function x($id)
+    {
+        $bulan = date('M Y');
+        // echo $bulan . request()->segment(2);
+        // die;
+        if (request()->segment(2) == 'izin') {
+            return Excel::download(new UserExport('izin', $id), "permissions-$bulan.xlsx");
+        } elseif (request()->segment(1) == 'absen') {
+            return Excel::download(new UserExport('izin', $id), "permissions-$bulan.xlsx");
+            // return Excel::download(new UserExport('absen', $id), "asben-$bulan.xlsx");
+        }
     }
 }

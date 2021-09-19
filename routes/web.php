@@ -37,6 +37,11 @@ Route::middleware(['auth', 'level:1'])->group(function () {
 Route::middleware(['auth', 'level:1,2'])->group(function () {
     Route::get('/absence-list', [AbsentController::class, 'listAbsence'])->name('absence-list');
     Route::get('/absence-report/{id}', [AbsentController::class, 'reportAbsence'])->name('absence-report');
+
+    Route::get('/export/izin/{id}', [AbsentController::class, 'exportPermission'])->name('permissions-export');
+    Route::get('/export/absen/{id}', [AbsentController::class, 'exportAbsent'])->name('absent-export');
+    // Route::get('/absence-report/export/{$id}', [AbsentController::class, 'export'])->name('absence-export');
+    // Route::get('/permissions/export/{$id}', [AbsentController::class, 'x'])->name('permissions-export');
 });
 
 Route::middleware(['auth', 'level:3'])->group(function () {
